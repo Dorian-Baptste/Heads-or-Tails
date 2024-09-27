@@ -3,10 +3,10 @@ const tally = {
     tails: 0
 };
 
-const coinImages = ["https://m.media-amazon.com/images/I/51xs7F+tP5L._AC_UF894,1000_QL80_.jpg", 
-    "https://m.media-amazon.com/images/I/51bcZy+HZpL._AC_UF894,1000_QL80_.jpg"
+const coinImages = [
+    "https://m.media-amazon.com/images/I/51xs7F+tP5L._AC_UF894,1000_QL80_.jpg", // heads image
+    "https://m.media-amazon.com/images/I/51bcZy+HZpL._AC_UF894,1000_QL80_.jpg"  // tails image
 ];
-
 
 const generate = document.querySelector(".generate");
 const headCount = document.querySelector(".headCount");
@@ -15,14 +15,12 @@ const headList = document.querySelector(".headList");
 const tailList = document.querySelector(".tailList");
 
 function getHeadsOrTails() {
-    return Math.floor(Math.random() * 2) < 0.5 ?  "heads" : "tails";
-    
+    return Math.random() < 0.5 ? "heads" : "tails";
 }
 
 function updateDisplayOfTally() {
     headCount.textContent = tally.heads;
     tailCount.textContent = tally.tails;
-
 }
 
 function listUpdater(result) {
@@ -31,27 +29,36 @@ function listUpdater(result) {
   
     if (result === "heads") {
         headList.appendChild(itemList);
-    
     } else {
-        
         tailList.appendChild(itemList);
     }
-  }
-  // tried to add images didnt work very well
-  function displayResult(result, listElement) {
+}
+
+function displayResult(result, listElement) {
     const img = document.createElement('img');
-    const imgTwo = document.createElemet('img');
-    img.src = coinImages[0]; 
-    imgTwo.src = coinImages[1];
-    listElement.appendChild(img); 
-  }
-  
+    img.src = result === "heads" ? coinImages[0] : coinImages[1];
+    img.style.width = "50px"; // Adjust the size as necessary
+    listElement.appendChild(img);
+}
+
 generate.addEventListener('click', function () {
-    const result = getHeadsOrTails();
-    tally[result]++;
-    updateDisplayOfTally();
-    listUpdater(result);
+    // Reset tally and lists for fresh 100 flips
+    tally.heads = 0;
+    tally.tails = 0;
+    headList.innerHTML = '';
+    tailList.innerHTML = '';
 
+    for (let i = 0; i < 100; i++) {
+        const result = getHeadsOrTails();
+        tally[result]++;
+        updateDisplayOfTally();
+        listUpdater(result);
+
+        // Display images corresponding to heads/tails
+        if (result === "heads") {
+            displayResult(result, headList);
+        } else {
+            displayResult(result, tailList);
+        }
+    }
 });
-
-
