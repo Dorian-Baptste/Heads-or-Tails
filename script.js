@@ -23,9 +23,9 @@ function updateDisplayOfTally() {
     tailCount.textContent = tally.tails;
 }
 
-function listUpdater(result) {
+function listUpdater(result, flipNumber) {
     const itemList = document.createElement("li");
-    itemList.textContent = result;
+    itemList.textContent = `${flipNumber}: ${result}`;
   
     if (result === "heads") {
         headList.appendChild(itemList);
@@ -50,9 +50,10 @@ generate.addEventListener('click', function () {
 
     for (let i = 0; i < 100; i++) {
         const result = getHeadsOrTails();
+        const flipNumber = i + 1;  // Label flips from 1 to 100
         tally[result]++;
         updateDisplayOfTally();
-        listUpdater(result);
+        listUpdater(result, flipNumber);
 
         // Display images corresponding to heads/tails
         if (result === "heads") {
