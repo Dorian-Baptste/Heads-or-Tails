@@ -1,5 +1,6 @@
 body, html {
     background-size: 100%;
+    background-color: #87CEEB;
 }
 
 h1 {
@@ -9,8 +10,7 @@ h1 {
 span {
     margin-top: 10px;
     font-size: 48px;
-    display: flex;
-    justify-content: center;
+    border: 2px solid black;
 }
 
 
@@ -20,7 +20,7 @@ span {
     font-size: 24px;
 }
 
-.both, .button {
+.both, .button, span {
     display: flex;
     justify-content: center;
 }
